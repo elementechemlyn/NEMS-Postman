@@ -1,0 +1,239 @@
+{
+	"info": {
+		"_postman_id": "a18f1f5a-b154-40a6-8e5d-4beca0a327ea",
+		"name": "NEMS",
+		"description": "# NEMS PostMan Collection\nTo use this collection you must first sign up for access to OpenTest. Full details of OpenTest can be found here:\n\nhttps://digital.nhs.uk/services/spine/open-access-test-environment-for-spine-opentest\n\nYou will need to ask for a MESH mailbox to be configured for you and for your ASID to be given permissions to use the NEMS service in OpenTest. In return you should recieve:\n\n*\tAn OpenVPN profile configuration file.\n*\tA client key and certificate.\n*\tA MESH Mailbox ID\n*\tAn OpenTest ASID (Accredited System Identifer) for your endpoint\n*\tAn OpenTest ODS Code for your endpoint\n*\tAn OpenTest domain name for your endpoint\n*\tAn OpenTest Party Key for your endpoint\n\n[TODO - link to Opentest set up instructions]\n\nYou will then need to import the OpenTest postman environment from:\n\n[TODO - Upload Environment files]\n\nand adjust it to include:\n\n*\tThe ASID sent to you upon creation of your OpenTest endpoint. This goes in the toASID variable.\n*\tThe MESH mailbox ID sent you upon creation of your OpenTest endpoint. This goes in the MESHBOXID variable.\n*\tThe ODS code sent to you upon creation of you OpenTest endpoint. This goes in the REQUESTERODS variable.\n*\tThe URL of your Opentest endpoint sent you you on creation of your OpenTest endpoint. This goes in the ISSUERURI.\n\nCalls to Spine services are authenticated using a client certficiate. The certificate and key sent to you on creation of your OpenTest account need to be set up in Postman as described here:\n\nhttps://learning.postman.com/docs/postman/sending-api-requests/certificates/\n\nThe Host field should be set to 192.168.128.11  - which is the endpoint for Spine Services in the OpenTest environment.\n",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Subscription Managment",
+			"item": [
+				{
+					"name": "Explicit Subscriptions",
+					"item": [
+						{
+							"name": "Organisation Requests",
+							"item": [
+								{
+									"name": "Create Address Update Subscription",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "80917aea-4b47-4cd6-8d44-42a4337a9cd3",
+												"exec": [
+													"const utils = eval(globals.loadUtils); //Function is defined in the Pre-request Script for the Collection.",
+													"utils.buildJWT();"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{JWTOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "fromASID",
+												"value": "{{FROMASID}}",
+												"type": "text"
+											},
+											{
+												"key": "InteractionID",
+												"value": "urn:nhs:names:services:clinicals-sync:SubscriptionsApiPost",
+												"type": "text"
+											},
+											{
+												"key": "toASID",
+												"value": "{{TOASID}}",
+												"type": "text"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/fhir+xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "<Subscription xmlns=\"http://hl7.org/fhir\">\n\t<meta>\n\t\t<profile value=\"https://fhir.nhs.uk/STU3/StructureDefinition/EMS-Subscription-1\"/>\n\t</meta>\n\t<status value=\"requested\"/>\n\t<contact>\n\t\t<system value=\"url\"/>\n\t\t<value value=\"https://directory.spineservices.nhs.uk/STU3/Organization/{{REQUESTERODS}}\"/>\n\t\t<use value=\"work\"/>\n\t</contact>\n\t<reason value=\"Test Subscription\"/>\n\t<criteria value=\"/Bundle?type=message&amp;serviceType=UHV&amp;Patient.identifier=http://fhir.nhs.net/Id/nhs-number|9434765919&amp;MessageHeader.event=pds-change-of-address-1\" />\n\t<channel>\n\t\t<type value=\"message\"/>\n\t\t<endpoint value=\"{{MESHBOXID}}\"/>\n\t</channel>\n</Subscription>"
+										},
+										"url": {
+											"raw": "{{SPINEENDPOINT}}/STU3/Subscription",
+											"host": [
+												"{{SPINEENDPOINT}}"
+											],
+											"path": [
+												"STU3",
+												"Subscription"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "User Requests",
+							"item": [],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Patient Requests",
+							"item": [],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Generic Subscriptions",
+					"item": [],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Event Publication",
+			"item": [
+				{
+					"name": "Organisation Publication",
+					"item": [],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "User Publication",
+					"item": [],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b067e3b8-dae9-49a5-bd27-8e547666dbe1",
+				"type": "text/javascript",
+				"exec": [
+					"//Set up a global function to build a JWT for each request.",
+					"pm.globals.set('loadUtils', function loadUtils() {",
+					"    let utils = {};",
+					"    utils.buildJWT = function buildJWT(requesting_user,requesting_patient) {",
+					"        ",
+					"        function getScopeFromRequest() {",
+					"            if (request.headers.interactionid === 'urn:nhs:names:services:clinicals-sync:SubscriptionsApiPost') {",
+					"                return \"patient/Subscription.write\"",
+					"            } else {",
+					"                return \"patient/Subscription.read\" //TODO Other scopes are available!",
+					"            }",
+					"        }",
+					"",
+					"        function base64url(source) {",
+					"        \t// Encode in classical base64",
+					"        \tencodedSource = CryptoJS.enc.Base64.stringify(source);",
+					"        ",
+					"        \t// Remove padding equal characters",
+					"        \tencodedSource = encodedSource.replace(/=+$/, '');",
+					"        ",
+					"        \t// Replace characters according to base64url specifications",
+					"        \tencodedSource = encodedSource.replace(/\\+/g, '-');",
+					"        \tencodedSource = encodedSource.replace(/\\//g, '_');",
+					"        ",
+					"        \treturn encodedSource;",
+					"        }",
+					"        ",
+					"        function addIAT(request) {",
+					"        \tvar iat = Math.floor(Date.now() / 1000) + 257;",
+					"        \tdata.iat = iat;",
+					"        \treturn data;",
+					"        }",
+					"        ",
+					"        function addEXP(request) {",
+					"        \tvar exp = Math.floor(Date.now() / 1000) + 257 + 300;",
+					"        \tdata.exp = exp;",
+					"        \treturn data;",
+					"        }",
+					"",
+					"        var header = {",
+					"    \t\"typ\": \"JWT\",",
+					"    \t\"alg\": \"none\"",
+					"        };",
+					"        //url vars not expanded yet so do it ourselves...",
+					"        const spineendpoint = pm.environment.get(\"SPINEENDPOINT\")",
+					"        const url = request.url.replace(\"{{SPINEENDPOINT}}\",spineendpoint)",
+					"        console.log(\"url:\" + url)",
+					"        var data = {",
+					"        \t\"iss\": pm.environment.get(\"ISSUERURI\"),",
+					"        \t\"sub\": \"https://fhir.nhs.uk/Id/accredited-system|\" + pm.environment.get(\"FROMASID\"),",
+					"        \t\"aud\": url,",
+					"        \t\"reason_for_request\": \"directcare\",",
+					"        \t\"scope\": getScopeFromRequest(),",
+					"        \t\"requesting_system\": \"https://fhir.nhs.uk/Id/accredited-system|\" +  pm.environment.get(\"FROMASID\"),",
+					"        \t\"requesting_organisation\": pm.environment.get(\"REQUESTERODS\")",
+					"        };",
+					"        ",
+					"        if (requesting_user){",
+					"            data.requesting_user = \"https://fhir.nhs.uk/Id/sds-role-profile-id|\" + requesting_user",
+					"            data.sub = \"https://fhir.nhs.uk/Id/sds-role-profile-id|\" + requesting_user",
+					"        }",
+					"        if (requesting_patient){",
+					"            data.requesting_patient = requesting_patient",
+					"        }",
+					"        console.log(\"JWT TOKEN:\" + JSON.stringify(data))",
+					"        data = addIAT(data);",
+					"        data = addEXP(data);",
+					"        ",
+					"        // encode header",
+					"        var stringifiedHeader = CryptoJS.enc.Utf8.parse(JSON.stringify(header));",
+					"        var encodedHeader = base64url(stringifiedHeader);",
+					"        ",
+					"        // encode data",
+					"        var stringifiedData = CryptoJS.enc.Utf8.parse(JSON.stringify(data));",
+					"        var encodedData = base64url(stringifiedData);",
+					"        ",
+					"        // build token",
+					"        var token = encodedHeader + \".\" + encodedData;",
+					"        ",
+					"        var signedToken = token + \".\";",
+					"        pm.environment.set(\"JWTOKEN\",signedToken);",
+					"    }",
+					"    return utils;",
+					"} + '; loadUtils();');",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b745d49c-d3c3-4033-836a-fd4dfaf2b400",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
