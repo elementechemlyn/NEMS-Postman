@@ -30,7 +30,7 @@ You will then need to import the OpenTest postman environment and adjust the var
 Calls to Spine services are authenticated using a client certficiate. The certificate and key sent to you on creation of your OpenTest account need to be set up in Postman as described here:
 https://learning.postman.com/docs/postman/sending-api-requests/certificates/
 
-The Host field should be set to 192.168.128.11  - which is the endpoint for Spine Services in the OpenTest environment.
+The Host field should be set to 192.168.128.11  - which is the host address for Spine Services in the OpenTest environment.
 
 Once the environment is imported and your certifcates setup you can import the collection and run the requests (ensure you have selected the OpenTest environment in postman).
 
