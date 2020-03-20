@@ -6,7 +6,7 @@ Full details of OpenTest can be found here:
 
 https://digital.nhs.uk/services/spine/open-access-test-environment-for-spine-opentest
 
-You will need to ask for a MESH mailbox to be configured for you and for your ASID to be given permissions to use the NEMS service in OpenTest. The MESH mailbox will need ot be configured for the workflow Ids listed here:
+You will need to ask for a MESH mailbox to be configured for you and for your ASID to be given permissions to use the NEMS service in OpenTest. The MESH mailbox will need to be configured for the workflow Ids listed here:
 
 https://gist.github.com/elementechemlyn/61e55708602552254f6f6c801a6ee52a
 
