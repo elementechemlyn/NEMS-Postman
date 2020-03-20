@@ -12,11 +12,12 @@ https://gist.github.com/elementechemlyn/61e55708602552254f6f6c801a6ee52a
 
 In return you should recieve:
 
-* An OpenVPN profile configuration file.\n*\tA client key and certificate.
+* An OpenVPN profile configuration file.
+* A client key and certificate.
 * A MESH Mailbox ID
 * An OpenTest ASID (Accredited System Identifer) for your endpoint
-* An OpenTest ODS Code for your endpoint\n
-* An OpenTest domain name for your endpoint\n
+* An OpenTest ODS Code for your endpoint
+* An OpenTest domain name for your endpoint
 * An OpenTest Party Key for your endpoint
 
 You will then need to import the OpenTest postman environment and adjust the variables to include:
