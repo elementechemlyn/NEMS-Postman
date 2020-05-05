@@ -36,3 +36,12 @@ The Host field should be set to 192.168.128.11  - which is the host address for 
 
 Once the environment is imported and your certifcates setup you can import the collection and run the requests (ensure you have selected the OpenTest environment in postman).
 
+Whilst the MESH API is available in OpenTest this postman collection does not yet include example calls. Event Messages can be recived by downloading the MESH Client:
+
+https://digital.nhs.uk/binaries/content/assets/website-assets/services/message-exchange-for-social-care-and-health-mesh/mesh-installation-pack-client-6-2-0.rar
+
+It can be configured to access your MESH mailbox on Opentest using the Keystore available here:
+
+https://digital.nhs.uk/services/path-to-live-environments/opentest-environment#message-exchange-for-social-care-and-health-mesh-keystore-files-to-download
+
+The password for your Opentest MESH Mailbox will have been provded when you signed up for OpenTest access.
