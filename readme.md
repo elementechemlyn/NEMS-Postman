@@ -1,5 +1,7 @@
 # NEMS PostMan Collection
-        
+This PostMan Collection demonstrates the use of the NEMS/DCH service in OpenTest. OpenTest provides access to a full 
+working version of the NEMS service to manage subscriptions as well as MESH mailboxes to recieve events. Access to NEMS/DCH in OpenTest does not require an HSCN Connection or any formal access processes such as the SCAL or testing evidence required for other NHS Path to Live environments and can be used for initial development and exploration work.
+
 To use this collection you must first sign up for access to OpenTest and connect using the OpenVPN software.
 
 Full details of OpenTest can be found here:
@@ -15,7 +17,7 @@ In return you should recieve:
 * An OpenVPN profile configuration file.
 * A client key and certificate.
 * A MESH Mailbox ID
-* An OpenTest ASID (Accredited System Identifer) for your endpoint
+* An OpenTest ASID (Accredited System Identifier) for your endpoint
 * An OpenTest ODS Code for your endpoint
 * An OpenTest domain name for your endpoint
 * An OpenTest Party Key for your endpoint
