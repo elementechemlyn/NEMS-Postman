@@ -12,6 +12,12 @@ You will need to ask for a MESH mailbox to be configured for you and for your AS
 
 https://gist.github.com/elementechemlyn/61e55708602552254f6f6c801a6ee52a
 
+You should also request access to the NEMS testing tool which is available as a web application on OpenTest at:
+
+http://192.168.128.17
+
+The testing tool allows events that cannot be published directly such as PDS events to be generated.
+
 In return you should recieve:
 
 * An OpenVPN profile configuration file.
