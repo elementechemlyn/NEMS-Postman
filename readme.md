@@ -27,6 +27,7 @@ In return you should recieve:
 * An OpenTest ODS Code for your endpoint
 * An OpenTest domain name for your endpoint
 * An OpenTest Party Key for your endpoint
+* A login for the testing tool
 
 You will then need to import the OpenTest postman environment and adjust the variables to include:
 
