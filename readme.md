@@ -52,3 +52,7 @@ It can be configured to access your MESH mailbox on Opentest using the Keystore 
 https://digital.nhs.uk/services/path-to-live-environments/opentest-environment#message-exchange-for-social-care-and-health-mesh-keystore-files-to-download
 
 The password for your Opentest MESH Mailbox will have been provded when you signed up for OpenTest access.
+
+You may also wish to review/develop against the NHS Login sandpit as described here:
+
+https://github.com/elementechemlyn/keycloak-nhslogin#setup
