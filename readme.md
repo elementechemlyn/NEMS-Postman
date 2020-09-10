@@ -43,7 +43,13 @@ The Host field should be set to 192.168.128.11  - which is the host address for 
 
 Once the environment is imported and your certifcates setup you can import the collection and run the requests (ensure you have selected the OpenTest environment in postman).
 
-Whilst the MESH API is available in OpenTest this postman collection does not yet include example calls. Event Messages can be recived by downloading the MESH Client:
+Whilst the MESH API is available in OpenTest this postman collection does not yet include example calls. 
+
+A sample Python script demonstrating use of the MESH API is here:
+
+https://gist.github.com/elementechemlyn/d2328dd684db93b30653ade9727776ba
+
+Event Messages can be also received by downloading the MESH Client:
 
 https://digital.nhs.uk/binaries/content/assets/website-assets/services/message-exchange-for-social-care-and-health-mesh/mesh-installation-pack-client-6-2-0.rar
 
